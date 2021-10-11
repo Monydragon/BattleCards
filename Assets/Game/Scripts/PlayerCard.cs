@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class PlayerCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Card playerCard;
+    public GameObject playerGo;
+    public Player player;
 
     [SerializeField]
     private TMP_Text nameText;
@@ -32,6 +34,8 @@ public class PlayerCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void Start()
     {
         cachedScale = transform.localScale;
+        playerGo = GameObject.FindGameObjectWithTag("Player");
+        player = playerGo.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -50,6 +54,7 @@ public class PlayerCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.localScale = zoomVector;
+        player.SelectedCard = playerCard;
     }
 
     public void OnPointerExit(PointerEventData eventData)

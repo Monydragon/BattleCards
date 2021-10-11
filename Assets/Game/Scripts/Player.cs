@@ -61,14 +61,22 @@ public class Player : MonoBehaviour, IPlayer
 
     public void DrawCard()
     {
-        int cardIndex = 0;
-        for (int i = 0; i < deck.Count; i++)
+        if(hand.Count < maxHandSize)
         {
-            if(i == deck.Count - 1) { selectedCard = deck[i]; cardIndex = i; }
+            int cardIndex = 0;
+            for (int i = 0; i < deck.Count; i++)
+            {
+                if (i == deck.Count - 1) { selectedCard = deck[i]; cardIndex = i; }
+            }
+            deck.RemoveAt(cardIndex);
+            hand.Add(selectedCard);
+            EventManager.DrawCard(selectedCard.CardPrefab, selectedCard, deck);
         }
-        deck.RemoveAt(cardIndex);
-        hand.Add(selectedCard);
-        EventManager.DrawCard(selectedCard.CardPrefab, selectedCard, deck);
+        else
+        {
+            Debug.Log("Max HandSize reached.");
+        }
+
     }
 
     public void UseCard()
